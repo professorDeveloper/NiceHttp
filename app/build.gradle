@@ -6,7 +6,7 @@ android {
     buildToolsVersion "34.0.0"
 
     defaultConfig {
-        applicationId "com.lagradost.nicehttp.example"
+        applicationId "com.sozo.nicehttp.example"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
