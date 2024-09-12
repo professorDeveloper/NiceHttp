@@ -13,7 +13,7 @@ publishing {
     }
     publications {
         maven(MavenPublication) {
-            groupId 'com.lagradost'
+            groupId 'com.sozo'
             artifactId 'nicehttp'
             version '0.4.10'
         }
