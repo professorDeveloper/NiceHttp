@@ -1,4 +1,4 @@
-# NiceHttp Copied From Blatzar Thanks for Blatzar
+# NiceHttp Copied From Blatzar`s NiceHttp  Thanks for Blatzar
 
 [![](https://jitpack.io/v/Blatzar/NiceHttp.svg)](https://jitpack.io/#professorDeveloper/NiceHttp)
 
