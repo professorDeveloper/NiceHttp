@@ -1,6 +1,6 @@
-# NiceHttp
+# NiceHttp Copied From Blatzar`s NiceHttp  Thanks for Blatzar
 
-[![](https://jitpack.io/v/Blatzar/NiceHttp.svg)](https://jitpack.io/#Blatzar/NiceHttp)
+[![](https://jitpack.io/v/Blatzar/NiceHttp.svg)](https://jitpack.io/#professorDeveloper/NiceHttp)
 
 A small and simple Android OkHttp wrapper to ease scraping. Mostly for personal use.
 
@@ -23,7 +23,7 @@ maven { url 'https://jitpack.io' }
 In app/build.gradle dependencies:
 
 ```groovy
-implementation 'com.github.Blatzar:NiceHttp:+'
+implementation 'com.github.professorDeveloper:NiceHttp:+'
 ```
 
 ### Scraping a document
@@ -37,66 +37,3 @@ lifecycleScope.launch {
 }
 ```
 
-### Parsing json
-
-```kotlin
-data class GithubJson(
-    val description: String,
-    val html_url: String,
-    val stargazers_count: Int,
-    val private: Boolean
-)
-
-// Implement your own requests parser here with your library of choice, this is with jackson :)
-
-val parser = object : ResponseParser {
-    val mapper: ObjectMapper = jacksonObjectMapper().configure(
-        DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
-        false
-    )
-
-    override fun <T : Any> parse(text: String, kClass: KClass<T>): T {
-        return mapper.readValue(text, kClass.java)
-    }
-
-    override fun <T : Any> parseSafe(text: String, kClass: KClass<T>): T? {
-        return try {
-            mapper.readValue(text, kClass.java)
-        } catch (e: Exception) {
-            null
-        }
-    }
-
-    override fun writeValueAsString(obj: Any): String {
-        return mapper.writeValueAsString(obj)
-    }
-}
-
-val requests = Requests(responseParser = parser)
-lifecycleScope.launch {
-    val json = requests.get("https://api.github.com/repos/blatzar/nicehttp").parsed<GithubJson>()
-    println(json.description)
-}
-```
-
-### Using cache
-
-Note: For a request to be cached you need to consume the body! You do this by calling .text or .document
-
-```kotlin
-// Just pass in a 
-val cache = Cache(
-    File(cacheDir, "http_cache"),
-    50L * 1024L * 1024L // 50 MiB
-)
-
-val okHttpClient = OkHttpClient.Builder()
-    .cache(cache)
-    .build()
-
-val cacheClient = Requests(okHttpClient)
-lifecycleScope.launch {
-    // Cache time refers to how long the response could have been cached for 
-    cacheClient.get("...", cacheTime = 1, cacheUnit = TimeUnit.HOURS)
-}
-```
