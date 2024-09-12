@@ -1,0 +1,4 @@
+rootProject.name = 'NiceHttp'
+include ':library'
+include ':app'
+include ':cli'
